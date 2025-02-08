@@ -26,11 +26,15 @@ if [ $? != 0 ]; then
     tmux send-keys -t $SESSION "clear" C-m
 
     # Resize the terminal pane to 40% width
-    tmux resize-pane -t $SESSION -x 40%
+    tmux resize-pane -t $SESSION -x 30%
+
+    # Select the first pane (editor pane)
+    tmux select-pane -t $SESSION:0.0
 
     # Set key bindings inside tmux
     tmux bind-key B send-keys -t $SESSION:0.1 C-u "idf.py build" C-m
     tmux bind-key F send-keys -t $SESSION:0.1 C-u "idf.py flash monitor" C-m
+    tmux bind-key Q send-keys -t $SESSION:0.1 C-u "tmux kill-session -t $SESSION" C-m
 fi
 
 # Attach to session
