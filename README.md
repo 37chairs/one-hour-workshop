@@ -1,5 +1,7 @@
 # One Hour Workshop
 
+neovim setup and config for espidf development.  I borrowed some of the lua structure and defaults from [ThePrimeagen](https://github.com/ThePrimeagen).
+
 ## editor requirements
 
 - install tmux, neovim
@@ -18,3 +20,8 @@ alias vesp="~/code/one-hour-workshop/tmux_esp.sh"
 
 1. Ctrl-b, B will run the build command
 2. Ctrl-b, F will run the flash command
+
+
+## license
+
+MIT
