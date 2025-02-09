@@ -8,6 +8,8 @@ neovim setup and config for espidf development.  I borrowed some of the lua stru
 
 ## nvimrc
 
+TODO: add note re: installing  vim packages and language servers
+
 ```bash
 # edit ~/.zshrc and add an alias to our tmux_esp.sh script
 alias vesp="~/code/one-hour-workshop/tmux_esp.sh"
