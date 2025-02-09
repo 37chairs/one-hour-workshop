@@ -20,45 +20,85 @@ alias vesp="~/code/one-hour-workshop/tmux_esp.sh"
 
 Note: Leader is set to space by default in this config.
 
-| **Keybinding** | **Mode** | **Action** |
+| **Shortcut** | **Mode** | **Action** |
 | --- | --- | --- |
-| `<leader>pv` | Normal | Open **netrw file explorer** |
-| `<leader>ff` | Normal | Open **Telescope** to **find files** |
-| `<leader>fg` | Normal | Open **Telescope** for **live grep** search |
-| `<leader>fb` | Normal | Open **Telescope** to **list buffers** |
-| `<leader>gs` | Normal | Open **Git status** (vim-fugitive) |
-| `<leader>q` | Normal | Quickly **quit** a buffer (`:q`) |
-| `<leader>w` | Normal | Quickly **save** a file (`:w`) |
-| `<leader>p` | Visual | Replace selection with **pasted** content (without overwriting register) |
-| `<leader>y` | Normal/Visual | Copy to **system clipboard** (`"+y`) |
-| `<leader>Y` | Normal | Copy **entire line** to **system clipboard** (`"+Y`) |
-| `<leader>d` | Normal/Visual | Delete without modifying register (`"_d`) |
-| `<leader>f` | Normal | **Format code** using **LSP formatter** |
-| `<leader>i` | Normal | **Auto-indent entire file** (`gg=G`) |
-| `<` / `>` | Visual | **Indent selection** left/right |
-| **Auto-Format on Save** | Auto | **LSP formatting** runs every time you save (`:w`) |
+| `<leader>pv` | Normal | Open **netrw** file explorer. |
+| `<leader>ff` | Normal | **Telescope**: Find files. |
+| `<leader>fg` | Normal | **Telescope**: Live grep search. |
+| `<leader>fb` | Normal | **Telescope**: List open buffers. |
+| `<leader>q` | Normal | Quit current buffer. |
+| `<leader>w` | Normal | Save current file. |
+| **Git Commands (Fugitive)** |     |     |
+| `<leader>gs` | Normal | Open **Git status** (Fugitive). |
+| `<leader>ga` | Normal | **Git add** (Stage current file). |
+| `<leader>gc` | Normal | **Git commit** (Opens commit message). |
+| `<leader>gp` | Normal | **Git push** to remote. |
+| `<leader>gd` | Normal | **Git diff** (Split diff view). |
+| `<leader>gr` | Normal | **Git reset file** (Revert file changes). |
+| **Clipboard & Editing** |     |     |
+| `<leader>p` | Visual | Paste while **preserving clipboard**. |
+| `<leader>y` | Normal/Visual | Copy to system clipboard. |
+| `<leader>Y` | Normal | Copy entire line to clipboard. |
+| `<leader>d` | Normal/Visual | **Delete** without yanking. |
+| **Code Formatting & Indentation** |     |     |
+| `<leader>f` | Normal | **Format code** using LSP. |
+| `<` | Visual | Indent left and stay in **Visual Mode**. |
+| `>` | Visual | Indent right and stay in **Visual Mode**. |
+| **Auto Format on Save** |     |     |
+| Auto | Normal | **Formats file on save** using LSP. |
+
+## nvim + fugitive
+
+### ** Fugitive Git Status Window Shortcuts**
+
+| **Shortcut** | **Action** |
+| --- | --- |
+| `-` | Stage/Unstage file under cursor (**toggle add/remove**). |
+| `cc` | Commit staged files (**opens commit message editor**). |
+| `ca` | Amend last commit (**edit message + add new changes**). |
+| `P` | Push to remote (`git push`). |
+| `u` | Unstage a file (same as `git reset HEAD <file>`). |
+| `D` | View **diff** of file under cursor. |
+| `<Tab>` | Open file under cursor **without staging**. |
+| `X` | Discard changes in file (**reset to HEAD**). |
+| `q` | Quit Git status window. |
 
 ## tmux key mappings
 
 Note: Tmux leader is set to ctrl+b by default.
 
-### **Tmux Keybindings**
+#### **Session & Pane Management**
 
-| **Keybinding** | **Action** |
+| Keybinding | Description |
 | --- | --- |
-| **`[`** | Shrink **Neovim pane** (move divider **left** by 5 columns). |
-| **`]`** | Expand **Neovim pane** (move divider **right** by 5 columns). |
-| **`\`** | Swap **left and right** panes. |
-| **`B`** | Run `idf.py build` in the **ESP-IDF terminal**. |
-| **`F`** | Run `idf.py flash monitor` in the **ESP-IDF terminal**. |
-| **`Q`** | Kill the **tmux session** (`tmux kill-session -t esp`). |
+| `vesp <project-folder>` | Launches a new tmux session named `esp`, opens Neovim on the left pane, and sets up the ESP-IDF environment in the right pane. |
+| `tmux kill-session -t esp` | Terminates the tmux session manually. |
 
-## tmux
+#### **Pane Navigation & Resizing**
 
-1. Ctrl-b, B will run the build command
-2. Ctrl-b, F will run the flash command
+| Keybinding | Description |
+| --- | --- |
+| `<Prefix> [` | Shrink the left (Neovim) pane by 5 columns. |
+| `<Prefix> ]` | Expand the left (Neovim) pane by 5 columns. |
+| `<Prefix> \` | Swap the editor and terminal panes. |
 
+#### **ESP-IDF Development Commands**
 
-## license
+| Keybinding | Description |
+| --- | --- |
+| `<Prefix> B` | Runs `idf.py build` to compile the ESP-IDF project. |
+| `<Prefix> F` | Runs `idf.py flash monitor` to flash the firmware and start monitoring serial output. |
+| `<Prefix> Q` | Terminates the tmux session. |
+
+#### **Git Commands**
+
+| Keybinding | Description |
+| --- | --- |
+| `<Prefix> G` | Runs `git status` to check repository state. |
+| `<Prefix> A` | Runs `git add --patch` to interactively stage changes. |
+| `<Prefix> C` | Runs `git commit` to commit staged changes. |
+| `<Prefix> P` | Runs `git push` to push commits to the remote repository. |
+
+## License
 
 MIT
