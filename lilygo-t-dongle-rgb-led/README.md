@@ -1,6 +1,7 @@
 # Lilygo T Dongle RGB LED Control
 
-This is a simple example of how to control the RGB LED on the Lilygo T Dongle using the ESP-IDF framework.
+This is a simple example of how to control the RGB LED on the Lilygo T Dongle 
+using the ESP-IDF framework.
 
 ## Manually install esp-idf-lib component
 
@@ -18,3 +19,7 @@ This is a simple example of how to control the RGB LED on the Lilygo T Dongle us
 % idf.py reconfigure
 
 ```
+
+## Rough Changelog
+
+2025-02-10 - Project builds and flashes to Lilygo T Dongle S3, LED cycles RGB
