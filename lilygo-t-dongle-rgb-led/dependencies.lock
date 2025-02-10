@@ -1,0 +1,38 @@
+dependencies:
+  color:
+    dependencies: []
+    source:
+      path: /Users/bryan/code/one-hour-workshop/lilygo-t-dongle-rgb-led/components/esp-idf-lib/components/color
+      type: local
+    version: '*'
+  esp_idf_lib_helpers:
+    dependencies: []
+    source:
+      path: /Users/bryan/code/one-hour-workshop/lilygo-t-dongle-rgb-led/components/esp-idf-lib/components/esp_idf_lib_helpers
+      type: local
+    version: '*'
+  idf:
+    source:
+      type: idf
+    version: 5.5.0
+  led_strip_spi:
+    dependencies: []
+    source:
+      path: /Users/bryan/code/one-hour-workshop/lilygo-t-dongle-rgb-led/components/esp-idf-lib/components/led_strip_spi
+      type: local
+    version: '*'
+  lib8tion:
+    dependencies: []
+    source:
+      path: /Users/bryan/code/one-hour-workshop/lilygo-t-dongle-rgb-led/components/esp-idf-lib/components/lib8tion
+      type: local
+    version: '*'
+direct_dependencies:
+- color
+- esp_idf_lib_helpers
+- idf
+- led_strip_spi
+- lib8tion
+manifest_hash: 3c1605e709596e74307f47d05853e93fc29e8e1108d3f87099ba0686075f1912
+target: esp32s3
+version: 2.0.0
