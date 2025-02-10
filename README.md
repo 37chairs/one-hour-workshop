@@ -76,6 +76,7 @@ Note: Tmux leader is set to ctrl+b by default.
 | --- | --- |
 | `vesp <project-folder>` | Launches a new tmux session named `esp`, opens Neovim on the left pane, and sets up the ESP-IDF environment in the right pane. |
 | `tmux kill-session -t esp` | Terminates the tmux session manually. |
+| `<Prefix> Q` | Terminates the tmux session. |
 
 #### **Pane Navigation & Resizing**
 
@@ -91,7 +92,7 @@ Note: Tmux leader is set to ctrl+b by default.
 | --- | --- |
 | `<Prefix> B` | Runs `idf.py build` to compile the ESP-IDF project. |
 | `<Prefix> F` | Runs `idf.py flash monitor` to flash the firmware and start monitoring serial output. |
-| `<Prefix> Q` | Terminates the tmux session. |
+| `<Prefix> X` | Stops running serial monitoring command. |
 
 #### **Git Commands**
 

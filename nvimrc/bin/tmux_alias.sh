@@ -40,13 +40,16 @@ if [ $? != 0 ]; then
     # ESP-IDF commands
     tmux bind-key B send-keys -t $SESSION:0.1 C-u "idf.py build" C-m
     tmux bind-key F send-keys -t $SESSION:0.1 C-u "idf.py flash monitor" C-m
-    tmux bind-key Q send-keys -t $SESSION:0.1 C-u "tmux kill-session -t $SESSION" C-m
+    tmux bind-key X send-keys -t $SESSION:0.1 C-t X C-m # exit monitor
 
     # Git commands
     tmux bind-key G send-keys -t $SESSION:0.1 "git status" C-m
     tmux bind-key A send-keys -t $SESSION:0.1 "git add --patch" C-m
     tmux bind-key P send-keys -t $SESSION:0.1 "git push" C-m
     tmux bind-key C send-keys -t $SESSION:0.1 "git commit" C-m
+
+    # Quit tmux session
+    tmux bind-key Q send-keys -t $SESSION:0.1 C-u "tmux kill-session -t $SESSION" C-m
 
 fi
 

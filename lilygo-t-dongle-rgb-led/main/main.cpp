@@ -1,8 +1,5 @@
-#include "driver/gpio.h"
 #include "driver/spi_master.h"
 #include "esp_log.h"
-#include "esp_system.h"
-#include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "led_strip_spi.h"
 
@@ -14,7 +11,7 @@
 #define LED_STRIP_LENGTH 1
 #define LED_STRIP_DATA_PIN GPIO_NUM_40
 #define LED_STRIP_CLOCK_PIN GPIO_NUM_39
-#define LED_SPI_HOST SPI3_HOST
+#define LED_SPI_HOST SPI2_HOST
 #define LED_BRIGHTNESS 32 // 0-255
 
 static spi_device_handle_t led_spi;
@@ -41,7 +38,7 @@ void setup_led_strip() {
   }
 
   spi_device_interface_config_t devcfg = {
-      .mode = 0,
+      .mode = 3,
       .clock_speed_hz = 10000000, // 10MHz
       .spics_io_num = -1,         // No CS pin needed
       .queue_size = 1,
@@ -70,6 +67,33 @@ void setup_led_strip() {
   led_strip_spi_flush(&strip);
 }
 
+void blink_rgb_led_task(void *pvParameter) {
+  while (1) {
+    static uint8_t counter = 0;
+    uint32_t c;
+    rgb_t color;
+    esp_err_t err;
+
+    // note: this is correct RGB order.
+    c = 0x0000a0 << ((counter % 3) * 8);
+    color.r = (c >> 16) & 0xff;
+    color.g = (c >> 8) & 0xff;
+    color.b = c & 0xff;
+    color = rgb_scale(color, 3); // reduce brightness to 5%
+    ESP_LOGI(TAG, "r: 0x%02x g: 0x%02x b: 0x%02x", color.r, color.g, color.b);
+
+    err = led_strip_spi_fill(&strip, 0, strip.length, color);
+    if (err != ESP_OK) {
+      ESP_LOGE(TAG, "led_strip_spi_fill(): %s", esp_err_to_name(err));
+    }
+    led_strip_spi_flush(&strip);
+    counter += 1;
+
+    vTaskDelay(
+        pdMS_TO_TICKS(50)); // Adjust delay for smoother/slower transition
+  }
+}
+
 extern "C" void app_main(void) {
   ESP_LOGI(TAG, "Device started, waiting 3 seconds before initializing LED");
 
@@ -85,6 +109,9 @@ extern "C" void app_main(void) {
   vTaskDelay(pdMS_TO_TICKS(3000));
 
   setup_led_strip();
+
+  ESP_LOGI(TAG, "LED strip setup complete, waiting 3 seconds");
+  xTaskCreate(blink_rgb_led_task, "blink_rgb_led_task", 4096, NULL, 5, NULL);
 
   int counter = 0;
   while (true) {
