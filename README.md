@@ -4,7 +4,23 @@ neovim setup and config for espidf development.  I borrowed some of the lua stru
 
 ## editor requirements
 
-- install tmux, neovim
+- install tmux, neovim 0.7+ -- make sure your version of neovim has LuaJIT support.  I noticed neovim on Ubuntu 22.04 does not, but 24.04 does.
+
+```bash
+nvim --version
+NVIM v0.9.5
+Build type: Release
+LuaJIT 2.1.1703358377
+```
+
+```bash
+
+mkdir -p ~/.local/bin
+mv nvim-linux-arm64.appimage ~/.local/bin/nvim
+chmod +x ~/.local/bin/nvim
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+```
 
 ## nvimrc
 

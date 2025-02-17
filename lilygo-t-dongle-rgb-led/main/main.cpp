@@ -8,7 +8,6 @@
 
 #define TAG "SPI-LED"
 
-#define LED_STRIP_LENGTH 1
 #define LED_STRIP_DATA_PIN GPIO_NUM_40
 #define LED_STRIP_CLOCK_PIN GPIO_NUM_39
 #define LED_SPI_HOST SPI2_HOST
@@ -79,7 +78,7 @@ void blink_rgb_led_task(void *pvParameter) {
     color.r = (c >> 16) & 0xff;
     color.g = (c >> 8) & 0xff;
     color.b = c & 0xff;
-    color = rgb_scale(color, 3); // reduce brightness to 5%
+    color = rgb_scale(color, LED_BRIGHTNESS);
     ESP_LOGI(TAG, "r: 0x%02x g: 0x%02x b: 0x%02x", color.r, color.g, color.b);
 
     err = led_strip_spi_fill(&strip, 0, strip.length, color);
@@ -89,15 +88,14 @@ void blink_rgb_led_task(void *pvParameter) {
     led_strip_spi_flush(&strip);
     counter += 1;
 
-    vTaskDelay(
-        pdMS_TO_TICKS(50)); // Adjust delay for smoother/slower transition
+    vTaskDelay(pdMS_TO_TICKS(50)); // Adjust delay for smoother/slower transition
   }
 }
 
 extern "C" void app_main(void) {
-  ESP_LOGI(TAG, "Device started, waiting 3 seconds before initializing LED");
+  ESP_LOGI(TAG, "Device started, waiting 1 second before initializing LED");
 
-  vTaskDelay(pdMS_TO_TICKS(3000));
+  vTaskDelay(pdMS_TO_TICKS(1000));
 
   ESP_LOGI(TAG, "Installing LED Driver");
   esp_err_t err = led_strip_spi_install();
@@ -105,20 +103,12 @@ extern "C" void app_main(void) {
     ESP_LOGE(TAG, "led_strip_spi_install(): %s", esp_err_to_name(err));
   }
 
-  ESP_LOGI(TAG, "Waiting 3 seconds before setting up LED strip");
-  vTaskDelay(pdMS_TO_TICKS(3000));
+  ESP_LOGI(TAG, "Waiting 1 second before setting up LED strip");
+  vTaskDelay(pdMS_TO_TICKS(1000));
 
   setup_led_strip();
+  ESP_LOGI(TAG, "LED strip setup complete, waiting 1 second before starting blink task");
+  vTaskDelay(pdMS_TO_TICKS(1000));
 
-  ESP_LOGI(TAG, "LED strip setup complete, waiting 3 seconds");
   xTaskCreate(blink_rgb_led_task, "blink_rgb_led_task", 4096, NULL, 5, NULL);
-
-  int counter = 0;
-  while (true) {
-
-    ESP_LOGI(TAG, "%d > All Loaded", counter);
-    counter++;
-
-    vTaskDelay(pdMS_TO_TICKS(1000));
-  }
 }
