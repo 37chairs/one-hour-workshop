@@ -23,7 +23,7 @@ if [ $? != 0 ]; then
 
     # Create a **right-side** terminal pane
     tmux split-window -h -t $SESSION -c "$PROJECT_DIR" \
-        "source ~/esp/esp-idf/export.sh && source ~/esp/esp-idf/python_env/idf5.4_py3.13_env/bin/activate; exec bash"
+        "source ~/esp/esp-idf/export.sh; exec bash"
 
     # Resize panes: Set left editor to ~85% width
     tmux select-pane -t $SESSION:0.0

@@ -2,6 +2,7 @@
 
 neovim setup and config for espidf development.  I borrowed some of the lua structure and defaults from [ThePrimeagen](https://github.com/ThePrimeagen).
 
+
 ## editor requirements
 
 - install tmux, neovim 0.7+ -- make sure your version of neovim has LuaJIT support.  I noticed neovim on Ubuntu 22.04 does not, but 24.04 does.

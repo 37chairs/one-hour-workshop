@@ -107,7 +107,9 @@ extern "C" void app_main(void) {
   vTaskDelay(pdMS_TO_TICKS(1000));
 
   setup_led_strip();
-  ESP_LOGI(TAG, "LED strip setup complete, waiting 1 second before starting blink task");
+  ESP_LOGI(
+      TAG,
+      "LED strip setup complete, waiting 1 second before starting blink task");
   vTaskDelay(pdMS_TO_TICKS(1000));
 
   xTaskCreate(blink_rgb_led_task, "blink_rgb_led_task", 4096, NULL, 5, NULL);
