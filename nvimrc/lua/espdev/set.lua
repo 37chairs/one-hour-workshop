@@ -32,3 +32,11 @@ vim.opt.colorcolumn = "80"
 
 vim.opt.cursorline = true
 vim.opt.cursorcolumn = true
+
+vim.opt.lazyredraw = false
+vim.opt.termguicolors = true
+vim.cmd("autocmd VimEnter * redraw!")
+
+vim.cmd([[
+  autocmd FocusGained,BufEnter * redraw!
+]])

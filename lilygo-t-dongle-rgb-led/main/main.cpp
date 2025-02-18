@@ -88,7 +88,8 @@ void blink_rgb_led_task(void *pvParameter) {
     led_strip_spi_flush(&strip);
     counter += 1;
 
-    vTaskDelay(pdMS_TO_TICKS(50)); // Adjust delay for smoother/slower transition
+    vTaskDelay(
+        pdMS_TO_TICKS(50)); // Adjust delay for smoother/slower transition
   }
 }
 

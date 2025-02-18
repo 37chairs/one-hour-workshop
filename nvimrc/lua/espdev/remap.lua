@@ -1,6 +1,8 @@
 -- Set leader to space
-vim.g.mapleader = " " 
+vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+
+vim.api.nvim_set_keymap("t", "<leader>q", "<C-\\><C-n>:q<CR>", { noremap = true, silent = true })
 
 -- Keymaps for Telescope
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex) -- Open netrw file explorer
@@ -32,13 +34,13 @@ vim.keymap.set("n", "<leader>gr", ":Gread<CR>", { desc = "Git Reset (Revert File
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
 -- next greatest remap ever : asbjornHaland
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
-vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 vim.keymap.set("n", "<leader>f", function()
-    vim.lsp.buf.format({ async = true })
+  vim.lsp.buf.format({ async = true })
 end, { desc = "Format Code (LSP)" })
 
 -- LSP Navigation
@@ -54,10 +56,10 @@ vim.keymap.set("v", "<", "<gv", { desc = "Indent Left" })
 vim.keymap.set("v", ">", ">gv", { desc = "Indent Right" })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*",
-    callback = function()
-        vim.lsp.buf.format({ async = false })
-    end,
+  pattern = "*",
+  callback = function()
+    vim.lsp.buf.format({ async = false })
+  end,
 })
 
 -- ChatGPT.nvim key mappings
@@ -68,4 +70,57 @@ vim.api.nvim_set_keymap("v", "<leader>ad", ":ChatGPTRun docstring<CR>", { norema
 vim.api.nvim_set_keymap("n", "<leader>ac", ":ChatGPT<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>ah", ":ChatGPTRun fix_bugs<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>ag", ":ChatGPTRun grammar_correction<CR>", { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap("n", "<leader>eb",
+  ":lua RunIDFBuild()<CR>",
+  { noremap = true, silent = true }
+)
+
+function RunIDFBuild()
+  -- Construct the command
+  local cmd = "source ~/esp/esp-idf/export.sh && idf.py build"
+
+  -- Open a split and run the command in a terminal
+  vim.cmd("split | wincmd j | resize 10") -- Open split, move to it, and resize
+  vim.cmd("term bash -c " .. vim.fn.shellescape(cmd))
+
+  -- Ensure scrolling follows output
+  vim.api.nvim_feedkeys("G", "t", false) -- Scroll to bottom
+end
+
+vim.api.nvim_set_keymap("n", "<leader>ef",
+  ":lua RunIDFFlash()<CR>",
+  { noremap = true, silent = true }
+)
+
+function RunIDFFlash()
+  -- Construct the command
+  local cmd = "source ~/esp/esp-idf/export.sh && idf.py flash"
+
+  -- Open a split and run the command in a terminal
+  vim.cmd("split | wincmd j | resize 10") -- Open split, move to it, and resize
+  vim.cmd("term bash -c " .. vim.fn.shellescape(cmd))
+
+  -- Ensure scrolling follows output
+  vim.api.nvim_feedkeys("G", "t", false) -- Scroll to bottom
+end
+
+
+vim.api.nvim_set_keymap("n", "<leader>em",
+  ":lua RunIDFMonitor()<CR>",
+  { noremap = true, silent = true }
+)
+
+function RunIDFMonitor()
+  -- Construct the command
+  local cmd = "source ~/esp/esp-idf/export.sh && idf.py monitor"
+
+  -- Open a split and run the command in a terminal
+  vim.cmd("split | wincmd j | resize 10") -- Open split, move to it, and resize
+  vim.cmd("term bash -c " .. vim.fn.shellescape(cmd))
+
+  -- Ensure scrolling follows output
+  vim.api.nvim_feedkeys("G", "t", false) -- Scroll to bottom
+end
+
 

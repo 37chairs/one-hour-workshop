@@ -43,19 +43,20 @@ return require('packer').startup(function(use)
   use 'github/copilot.vim'
   use 'tpope/vim-fugitive' -- Git integration
 
-  use {
-    "jackMort/ChatGPT.nvim",
-    requires = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim"
-    },
-    config = function()
-      require("chatgpt").setup({
-        api_key_cmd = read_api_key -- Now correctly returns a command
-      })
-    end
-  }
+  -- only load openai if ENV var OPENAI_API_KEY is set.
+  if os.getenv("OPENAI_API_KEY") then
+    use {
+      "jackMort/ChatGPT.nvim",
+      requires = {
+        "MunifTanjim/nui.nvim",
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim"
+      },
+      config = function()
+        require("chatgpt").setup({})
+      end
+    }
+  end
 
   use {
     'nvim-lualine/lualine.nvim',

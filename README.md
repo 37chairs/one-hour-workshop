@@ -23,17 +23,28 @@ echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
+## Using ChatGPT
+
+To use ChatGPT, generate an API key and save it in ~/.local/openai_api_key.txt.
+
+Then in .bashrc: 
+```
+export OPENAI_API_KEY=$(cat ~/.local/openai_api_key.txt)
+```
+
 ## nvimrc
 
 TODO: add note re: installing  vim packages and language servers
 Another test change
 
 ```bash
-# edit ~/.zshrc and add an alias to our tmux_esp.sh script
-alias vesp="~/code/one-hour-workshop/tmux_esp.sh"
+# edit ~/.zshrc and add an alias to our nvim + esp config
+alias vesp="source ~/.local/.espdev_env && nvim -u ~/code/one-hour-workshop/nvimrc/init.lua"
+
 
 # to edit an espidf project, run
-% vesp <path-to-project>
+% cd <path-to-project>
+% vesp .
 ```
 
 ## Nvim key mappings
@@ -83,42 +94,13 @@ Note: Leader is set to space by default in this config.
 | `X` | Discard changes in file (**reset to HEAD**). |
 | `q` | Quit Git status window. |
 
-## tmux key mappings
-
-Note: Tmux leader is set to ctrl+b by default.
-
-#### **Session & Pane Management**
-
-| Keybinding | Description |
-| --- | --- |
-| `vesp <project-folder>` | Launches a new tmux session named `esp`, opens Neovim on the left pane, and sets up the ESP-IDF environment in the right pane. |
-| `tmux kill-session -t esp` | Terminates the tmux session manually. |
-| `<Prefix> Q` | Terminates the tmux session. |
-
-#### **Pane Navigation & Resizing**
-
-| Keybinding | Description |
-| --- | --- |
-| `<Prefix> [` | Shrink the left (Neovim) pane by 5 columns. |
-| `<Prefix> ]` | Expand the left (Neovim) pane by 5 columns. |
-| `<Prefix> \` | Swap the editor and terminal panes. |
-
 #### **ESP-IDF Development Commands**
 
 | Keybinding | Description |
 | --- | --- |
-| `<Prefix> B` | Runs `idf.py build` to compile the ESP-IDF project. |
-| `<Prefix> F` | Runs `idf.py flash monitor` to flash the firmware and start monitoring serial output. |
-| `<Prefix> X` | Stops running serial monitoring command. |
-
-#### **Git Commands**
-
-| Keybinding | Description |
-| --- | --- |
-| `<Prefix> G` | Runs `git status` to check repository state. |
-| `<Prefix> A` | Runs `git add --patch` to interactively stage changes. |
-| `<Prefix> C` | Runs `git commit` to commit staged changes. |
-| `<Prefix> P` | Runs `git push` to push commits to the remote repository. |
+| `<leader>eb` | Runs `idf.py build` to compile the ESP-IDF project. |
+| `<leader>ef` | Runs `idf.py flash monitor` to flash the firmware and start monitoring serial output. |
+| `<leader>em` | Stops running serial monitoring command. |
 
 ## License
 

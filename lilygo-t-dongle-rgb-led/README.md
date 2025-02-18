@@ -32,10 +32,13 @@ git clone -b v5.4 --recursive https://github.com/espressif/esp-idf.git
 % idf.py flash
 ```
 
-Note: If initial build fails, check that esp-idf-lib cloned fully, then set-target, reconfigure, and build. 
+Note: If initial build fails, check that esp-idf-lib cloned fully, then set-target, reconfigure, and build.  If you're on an ubuntu machine and your user doesn't have access to the serial port: 
+
+```bash
+sudo usermod -a -G dialout $USER
+```
 
 ## Loading ESP-IDF env later on
-
 
 ```bash
 % source ~/esp/esp-idf/export.sh
