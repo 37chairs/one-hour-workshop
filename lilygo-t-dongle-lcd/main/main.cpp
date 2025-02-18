@@ -79,6 +79,22 @@ public:
 
 static LGFX tft;
 
+void taskCounter(void *pvParameters) {
+  int counter = 0;
+  while (true) {
+    tft.clear();
+    tft.setCursor(0, 0);
+    tft.printf("Counter: \n> %d", counter++);
+    tft.display();
+
+    if (counter > 1000) {
+      counter = 0;
+    }
+
+    vTaskDelay(pdMS_TO_TICKS(1000));
+  }
+}
+
 // ==================== MAIN ====================
 extern "C" void app_main(void) {
   ESP_LOGI(TAG, "Initializing LCD...");
@@ -98,20 +114,6 @@ extern "C" void app_main(void) {
   tft.setRotation(0);
   tft.setTextColor(TFT_WHITE);
   tft.setCursor(0, 0);
-  tft.println("Hello, ESP-IDF!");
-  tft.display();
 
-  int counter = 0;
-  while (true) {
-    tft.clear();
-    tft.setCursor(0, 0);
-    tft.printf("Counter: \n> %d", counter++);
-    tft.display();
-
-    if (counter > 1000) {
-      counter = 0;
-    }
-
-    vTaskDelay(pdMS_TO_TICKS(1000));
-  }
+  xTaskCreate(taskCounter, "Counter Task", 2048, NULL, 1, NULL);
 }
