@@ -100,20 +100,24 @@ static void espnow_recv_cb(const esp_now_recv_info_t *info, const uint8_t *data,
     msg_counter = 0;
   }
 
-  ESP_LOGI(
-      TAG,
-      "Packet received from %02X:%02X:%02X:%02X:%02X:%02X, len: %d, Data: %.*s",
-      info->src_addr[0], info->src_addr[1], info->src_addr[2],
-      info->src_addr[3], info->src_addr[4], info->src_addr[5], len, len, data);
+  ESP_LOGI(TAG, "Packet received from %02X:%02X:%02X:%02X:%02X:%02X, len: %d",
+           info->src_addr[0], info->src_addr[1], info->src_addr[2],
+           info->src_addr[3], info->src_addr[4], info->src_addr[5], len);
 
-  // Update the TFT display
+  // Log raw bytes to serial
+  ESP_LOG_BUFFER_HEX(TAG, data, len);
+
+  // Update the TFT display (unchanged)
   tft.clear();
   tft.setCursor(0, 0);
   tft.setTextSize(1);
   tft.printf("RX: %d   Delta: %.2f s\n", msg_counter,
              (double)esp_timer_get_time() / 10000000);
-  tft.printf("DATA: %.*s\n", len, data);
-  tft.printf("Length: %d", len);
+  tft.printf("DATA: ");
+  for (int i = 0; i < len; i++) {
+    tft.printf("%02X ", data[i]);
+  }
+  tft.printf("\nLength: %d", len);
 
   tft.display();
 }
